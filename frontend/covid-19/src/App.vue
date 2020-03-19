@@ -24,9 +24,7 @@ export default{
     }
   }),
   mounted(){
-    this.axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale',headers: {
-          // remove headers
-        })
+    this.axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale')
     .then(datas =>{
       datas.forEach(element => {
         window.console.log(element)
