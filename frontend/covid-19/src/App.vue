@@ -1,35 +1,13 @@
 <template>
-<Chart :chartdata="chartdata" :options="options"/>
+<div>
+  <router-view/>
+  <br>
+  <br>
+  <footer style="text-align:center;">
+  <p>Creato da: Alessandro Amedei</p>
+  <p>Contatto: <a href="mailto:alessandroamedei18@gmail.com">
+  email</a></p>
+  <p>Fonte dati: <a href="https://github.com/pcm-dpc/COVID-19">Protezione Civile</a> </p>
+</footer>
+</div>
 </template>
-<script>
-import Chart from './components/Chart.vue'
-export default{
-  components: {
-    Chart
-  },
-    data: () => ({
-    chartdata: {
-      labels: ['January', 'February',4,3,5,7,4,4,7,45,4],
-      datasets: [
-        {
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [40, 20,4,3,6,8,5,3,6,8,6]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
-  }),
-  mounted(){
-    this.axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale')
-    .then(datas =>{
-      datas.forEach(element => {
-        window.console.log(element)
-      });
-    })
-  }
-}
-</script>
