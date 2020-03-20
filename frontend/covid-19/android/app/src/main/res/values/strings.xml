@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Covid19</string>
+    <string name="title_activity_main">Covid19Italia</string>
+    <string name="package_name">com.alessandroamedei.covid19italia</string>
+    <string name="custom_url_scheme">com.alessandroamedei.covid19italia</string>
+</resources>

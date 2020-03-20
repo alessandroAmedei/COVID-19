@@ -1,0 +1,1 @@
+The app doesn't collect any kind of data from the user.

@@ -1,0 +1,8 @@
+{
+  "appId": "com.alessandroamedei.covid19italia",
+  "appName": "Covid19Italia",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "cordova": {}
+}
