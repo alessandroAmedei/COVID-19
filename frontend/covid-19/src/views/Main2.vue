@@ -1,7 +1,7 @@
 <template>
 <v-content>
     <br>
-    <h3>ANDAMENTO REGIONALE</h3>
-    <h4>Work In Progress</h4>
+    <h2>Andamento Regionale</h2>
+    <h4>Sviluppo in corso..</h4>
 </v-content>
 </template>

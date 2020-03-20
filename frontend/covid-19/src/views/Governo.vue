@@ -1,6 +1,8 @@
 <template>
 
 <v-content>
+    <v-container fluid>
+        <h2>Disposizioni del governo</h2>
     <br>
     <v-card class="card" max-width="500">
 
@@ -11,7 +13,7 @@
             Qui troverai tutte le disposizione del governo
         </v-card-subtitle>
     </v-card>
-
+</v-container>
 </v-content>
 
 </template>

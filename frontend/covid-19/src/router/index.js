@@ -5,6 +5,7 @@ import Main2 from '../views/Main2.vue'
 import Norme from '../views/Norme.vue'
 import Governo from '../views/Governo.vue'
 import Numeri from '../views/Numeri.vue'
+import Info from '../views/Info.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,10 @@ const routes = [
     path: '/numeriutili',
     name: 'Numeri',
     component: Numeri
+  }, {
+    path: '/infoapp',
+    name: 'Info',
+    component: Info
   }
 ]
 

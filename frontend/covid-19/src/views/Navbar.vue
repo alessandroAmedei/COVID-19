@@ -5,8 +5,8 @@
 
         </v-app-bar-nav-icon>
         <v-toolbar-title>
-            <span class="font-weight-light">PANDEMIA COVID-19</span>
-            <span> ITALIA</span>
+            <span class="font-weight-light">PANDEMIA COVID-19,</span>
+            <span> ITALIA </span>
         </v-toolbar-title>
     </v-app-bar>
 
@@ -43,6 +43,7 @@ export default {
                 {icon:'person', text:'Norme da attuare', route:'/norme'},
                 {icon:'mdi-home', text:'Disposizioni del governo', route:'/governo'},
                 {icon:'mdi-home', text:'Numeri utili', route:'/numeriutili'},
+                {icon:'mdi-home', text:'Info App', route:'/infoapp'},
             ]
         }
     }

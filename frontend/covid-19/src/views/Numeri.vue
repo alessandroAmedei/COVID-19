@@ -1,5 +1,8 @@
 <template>
 <v-content>
+        <v-container fluid>
+            <h2>Numeri utili</h2>
+<br>
 <br>
 <h2>Numero di pubblica utilità del Ministero della Salute</h2>
 
@@ -10,6 +13,7 @@
         <v-card-subtitle>
         </v-card-subtitle>
     </v-card>
+<br>
 <br>
 <h2>Numeri utili delle regioni</h2>
 
@@ -24,6 +28,7 @@
     </v-card>
     <br>
 </div>
+<br>
 <h2>Numero unico di emergenza</h2>
 
  <v-card class="card" max-width="500">
@@ -34,7 +39,7 @@
         </v-card-subtitle>
     </v-card>
 <br>
-
+        </v-container>
 </v-content>
 </template>
 <script>
@@ -78,12 +83,12 @@ export default{
                 numero2:''
             },
             {
-                regione:'Provincia autonoma di Bolzano: 800 751 751',
+                regione:'Prov. di Bolzano: 800 751 751',
                 numero:'',
                 numero2:''
             },
             {
-                regione:'Provincia autonoma di Trento: 800 867 388',
+                regione:'Prov. di Trento: 800 867 388',
                 numero:'',
                 numero2:''
             },
@@ -98,10 +103,46 @@ export default{
                 numero2:''
             },
             {
+                regione:'Friuli Ven. Giulia: 800 500 300',
+                numero:'',
+                numero2:''
+            },
+            {
+                regione:'Emilia-Romagna: 800 033 033',
+                numero:'',
+                numero2:''
+            },
+            {
+                regione:'Campania: 800 90 96 99',
+                numero:'',
+                numero2:''
+            },
+            {
+                regione:'Calabria: 800 76 76 76',
+                numero:'',
+                numero2:''
+            },
+            {
+                regione:'Basilicata: 800 99 66 88 ',
+                numero:'',
+                numero2:''
+            },
+            {
                 regione:'Friuli Venezia Giulia: 800 500 300',
                 numero:'',
                 numero2:''
             },
+            {
+                regione:'Marche: 800 93 66 77',
+                numero:'',
+                numero2:''
+            },
+            {
+                regione:'Piemonte: 800 19 20 20',
+                numero:'',
+                numero2:''
+            },
+            
         ]
     }
     }
