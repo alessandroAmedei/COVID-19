@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "covid19-alessandroamedei",
     "public": "dist",
     "ignore": [
       "firebase.json",

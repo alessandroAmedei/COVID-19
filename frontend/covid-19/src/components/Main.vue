@@ -1,26 +1,15 @@
 <template>
-<div>
-<h2>Pandemia di COVID-19 in Italia</h2>
-<h3>Andamento Nazionale</h3>
-<h4>Ultimo aggiornamento : {{lastUpdate}}</h4>
-<br>
+  <v-content>
+    <br><br>
 <div style="text-align:center">
-<select v-model="selectedOption" @change="selectChanged()">
-  <option value="totale_casi">Totale Casi</option>
-  <option value="deceduti">Deceduti</option>
-  <option value="dimessi_guariti">Dimessi Guariti</option>
-  <option value="nuovi_attualmente_positivi">Nuovi attualmente positivi</option>
-  <option value="ricoverati_con_sintomi">Ricoverati con sintomi</option>
-  <option value="terapia_intensiva">Terapia Intensiva</option>
-  <option value="totale_ospedalizzati">Totale ospedalizzati</option>
-  <option value="isolamento_domiciliare">Isolamento domiciliare</option>
-  <option value="totale_attualmente_positivi">Totale attualmente positiv</option>
-  <option value="tamponi">Tamponi</option>
-</select>
+<v-select label="Scegli il dato che vuoi visualizzare" style="max-width:500px; margin:0 auto;" v-model="selectedOption" :items="optiona" @change="selectChanged()"
+ menu-props="auto">
+
+</v-select>
 </div>
 <br>
 <Chart :style="myStyles" v-if="loaded" :chartdata="chartdata" :options="options"/>
-</div>
+  </v-content>
 </template>
 <script>
 import Chart from './Chart.vue'
@@ -29,6 +18,7 @@ export default{
     Chart
   },
     data: () => ({
+    optiona:['totale_casi','deceduti','dimessi_guariti','nuovi_attualmente_positivi','ricoverati_con_sintomi','terapia_intensiva','totale_ospedalizzati','isolamento_domiciliare','totale_attualmente_positivi','tamponi'],
     lastUpdate: '',
     loaded: false,
     selectedOption: 'totale_casi',
