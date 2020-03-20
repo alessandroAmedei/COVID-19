@@ -7,11 +7,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    andamento_nazionale:[]
+    andamento_nazionale:[],
+    andamento_regionale:[],
   },
   mutations: {
     setAndamentoNazionale(state,data){
       state.andamento_nazionale = data; //Creaty a copy of the array
+    },
+    setAndamentoRegionale(state,data){
+      state.andamento_regionale = data; //Creaty a copy of the array
     }
   },
   actions: {
@@ -26,11 +30,26 @@ export default new Vuex.Store({
             reject(err);
         });
         });
-    }
+    },
+    getAndamentoRegionale({commit}){
+      return new Promise((resolve,reject)=>{
+        axios.get('https://covid-19-virus.herokuapp.com/api/andamento_regionale')
+        .then(data =>{
+          commit('setAndamentoRegionale', data.data);
+          resolve();
+      })
+      .catch(err=>{
+          reject(err);
+      });
+      });
+  }
   },
   getters:{
     andamentoNazionale(state){
       return state.andamento_nazionale;
+    },
+    andamentoRegionale(state){
+      return state.andamento_regionale;
     }
   }
 })
