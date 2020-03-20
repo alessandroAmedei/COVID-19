@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container fluid>
-      <h2>Andamento Nazionale</h2>
+      <h2>Andamento Regionale</h2>
       <br />
       <br />
       <div style="text-align:center">
@@ -57,11 +57,27 @@ export default {
       "tamponi"
     ],
     optiona_regioni: [
-        'Toscana',
-        'Lombardia',
+        'Valle d\'Aosta',
         'Piemonte',
+        'Liguria',
+        'Lombardia',
+        'P.A. Trento',
+        'P.A. Bolzano',
+        'Veneto',
+        'Friuli Venezia Giulia',
+        'Emilia Romagna',
+        'Toscana',
+        'Umbria',
+        'Marche',
         'Lazio',
-        'Sicilia'
+        'Abruzzo',
+        'Molise',
+        'Campania',
+        'Puglia',
+        'Basilicata',
+        'Calabria',
+        'Sicilia',
+        'Sardegna'
     ],
     lastUpdate: "",
     loaded: false,
@@ -91,17 +107,19 @@ export default {
 
       //   const andamentoNazionale = this.$store.state.andamento_nazionale;
 
-      const andamentoRegionale = await this.$store.getters.andamentoRegionale; //SERVIVA SOLO AWAIT??????
+      const andamentoRegionale = await this.$store.getters.andamentoRegionale; //SERVE AWAIT
 
         window.console.log(andamentoRegionale);
       this.chartdata.labels = [];
       this.chartdata.datasets[0].data = [];
-      this.chartdata.datasets[0].label = what;
+      this.chartdata.datasets[0].label = what + ' , ' + this.selectedOption_regioni;
 
-      andamentoRegionale.forEach(day => {
-          window.console.log(day);
+      andamentoRegionale.forEach(day => { //Qui cicla tutto ogni volta..
+        const region = day.denominazione_regione;
+        if(region === this.selectedOption_regioni){
         this.chartdata.labels.push(day.data.split(" ")[0]);
         this.chartdata.datasets[0].data.push(day[what]);
+        }
       });
 
       const a = andamentoRegionale[andamentoRegionale.length - 1].data;
