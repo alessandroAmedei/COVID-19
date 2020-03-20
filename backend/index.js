@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const app = express();
 
 const andamento_nazionale_router = require('./api/andamento_nazionale/db');
+const andamento_regionale_router = require('./api/andamento_regionale/db');
 
 //IMPORTANTE MIDDLEWARE
 app.use(function (req, res, next) {
@@ -28,6 +29,8 @@ app.get('/api',(req,res)=>{
 })
 
 app.use('/api',andamento_nazionale_router);
+
+app.use('/api',andamento_regionale_router);
 
 const port = process.env.PORT || 5000;
 
