@@ -4,13 +4,15 @@
   "description": "REST API per pandemia del covid-19",
   "main": "backend/index.js",
   "scripts": {
-    "start" : "node backend/index.js",
-    "dev" : "nodemon backend/index.js"
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js"
   },
   "author": "alessandroAmedei",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.9.5"
+    "leaflet": "^1.6.0",
+    "mongoose": "^5.9.5",
+    "vue2-leaflet": "^2.5.2"
   }
 }

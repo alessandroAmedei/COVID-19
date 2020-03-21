@@ -7,6 +7,7 @@ import Governo from '../views/Governo.vue'
 import Numeri from '../views/Numeri.vue'
 import Info from '../views/Info.vue'
 import Autodichiarazione from '../views/Autodichiarazione.vue'
+import Map from '../components/Map.vue';
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/infoapp',
     name: 'Info',
     component: Info
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
   },
   {
     path: '/autodichiarazione',
