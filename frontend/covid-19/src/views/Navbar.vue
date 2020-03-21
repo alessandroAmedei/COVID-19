@@ -40,10 +40,12 @@ export default {
             items:[
                 {icon:'mdi-home', text:'Andamento Nazionale',route:'/'},
                 {icon:'mdi-home', text:'Andamento Regionale', route:'/main2'},
+                {icon:'mdi-home', text:'Autodichiarazione online', route:'/autodichiarazione'},
                 {icon:'person', text:'Norme da attuare', route:'/norme'},
                 {icon:'mdi-home', text:'Disposizioni del governo', route:'/governo'},
                 {icon:'mdi-home', text:'Numeri utili', route:'/numeriutili'},
                 {icon:'mdi-home', text:'Info App', route:'/infoapp'},
+                
             ]
         }
     }

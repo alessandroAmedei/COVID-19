@@ -6,6 +6,7 @@ import Norme from '../views/Norme.vue'
 import Governo from '../views/Governo.vue'
 import Numeri from '../views/Numeri.vue'
 import Info from '../views/Info.vue'
+import Autodichiarazione from '../views/Autodichiarazione.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/infoapp',
     name: 'Info',
     component: Info
+  },
+  {
+    path: '/autodichiarazione',
+    name: 'Autodichiarazione',
+    component: Autodichiarazione
   }
 ]
 
