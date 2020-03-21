@@ -106,7 +106,7 @@ export default {
       return arr;
     },
     async getDatasFromApi(what) {
-      window.console.log(what);
+
       //CAMBIO, HERE WHAT IS AN ARRAY. WE HAVE TO PLOT MULTIPLE GRAPHS.
 
       this.loaded = false;
