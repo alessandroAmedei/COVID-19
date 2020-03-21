@@ -5,6 +5,18 @@
       <br />
       <br />
       <div style="text-align:center">
+        <v-combobox
+          style="max-width:500px; margin:0 auto;"
+          max-width="500"
+          v-model="selectedOption"
+          :items="optionaGetName()"
+          label="Scegli i dati che vuoi visualizzare"
+          @change="selectChanged()"
+          multiple
+          chips
+        ></v-combobox>
+
+        <!--
         <v-select
           label="Scegli il dato che vuoi visualizzare"
           style="max-width:500px; margin:0 auto;"
@@ -13,6 +25,7 @@
           @change="selectChanged()"
           menu-props="auto"
         ></v-select>
+        -->
       </div>
       <br />
       <Chart :style="myStyles" v-if="loaded" :chartdata="chartdata" :options="options" />
@@ -22,7 +35,8 @@
       <div absolute class="font-weight-medium">
         <v-col style="font-size:13px;" class="text-center" cols="12">
           <strong>Ultimo aggiornamento</strong>
-          — {{lastUpdate}} <br>
+          — {{lastUpdate}}
+          <br />
           <strong>Fonte dati</strong> — Protezione civile
         </v-col>
       </div>
@@ -37,28 +51,29 @@ export default {
   },
   data: () => ({
     optiona: [
-      "totale_casi",
-      "deceduti",
-      "dimessi_guariti",
-      "nuovi_attualmente_positivi",
-      "ricoverati_con_sintomi",
-      "terapia_intensiva",
-      "totale_ospedalizzati",
-      "isolamento_domiciliare",
-      "totale_attualmente_positivi",
-      "tamponi"
+      { name: "totale_casi", color: "#0000ff" },
+      { name: "deceduti", color: "#000000" },
+      { name: "dimessi_guariti", color: "#ff0000" },
+      { name: "nuovi_attualmente_positivi", color: "" },
+      { name: "ricoverati_con_sintomi", color: "" },
+      { name: "terapia_intensiva", color: "" },
+      { name: "totale_ospedalizzati", color: "" },
+      { name: "isolamento_domiciliare", color: "" },
+      { name: "totale_attualmente_positivi", color: "#ff0000" },
+      { name: "tamponi", color: "" }
     ],
     lastUpdate: "",
     loaded: false,
-    selectedOption: "totale_casi",
+    selectedOption: ["totale_casi"],
     chartdata: {
       labels: [],
       datasets: [
-        {
+        /*  {
           label: "Casi Totali di Corona Virus",
           backgroundColor: "#10ff50",
           data: []
         }
+        */
       ]
     },
     options: {
@@ -67,23 +82,80 @@ export default {
     }
   }),
   methods: {
+    optionaGetName() {
+      var arr = [];
+      this.optiona.forEach(obj => {
+        arr.push(obj.name);
+      });
+      return arr;
+    },
+    optionaGetColor() {
+      var arr = [];
+      this.optiona.forEach(obj => {
+        if (obj.color === "") {
+          const letters = "0123456789ABCDEF";
+          var color = "#";
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          arr.push(color);
+        } else {
+          arr.push(obj.color);
+        }
+      });
+      return arr;
+    },
     async getDatasFromApi(what) {
       window.console.log(what);
+      //CAMBIO, HERE WHAT IS AN ARRAY. WE HAVE TO PLOT MULTIPLE GRAPHS.
+
       this.loaded = false;
-
-      // await this.$store.dispatch("getAndamentoNazionale").then(()=>{
-
-      //   const andamentoNazionale = this.$store.state.andamento_nazionale;
 
       const andamentoNazionale = await this.$store.getters.andamentoNazionale; //SERVIVA SOLO AWAIT??????
 
-      this.chartdata.labels = [];
-      this.chartdata.datasets[0].data = [];
-      this.chartdata.datasets[0].label = what;
+      this.chartdata.labels = []; //reset asse x
+      this.chartdata.datasets = [];
 
       andamentoNazionale.forEach(day => {
-        this.chartdata.labels.push(day.data.split(" ")[0]);
-        this.chartdata.datasets[0].data.push(day[what]);
+        this.chartdata.labels.push(day.data.split(" ")[0]); //IMPOSTA LABELS (ASSE X)
+      });
+
+      var counter = 0;
+
+      what.forEach(graph => {
+        //per ogni tipo di dato selezionato
+
+        //prendi il colore!
+        var col = "";
+        this.optiona.forEach(obj => {
+          //cicli tutte le opzioni e prendi il colore
+          if (obj.name === graph) col = obj.color;
+        });
+
+        if (col === "") { //se colore non impostato, crealo random
+          const letters = "0123456789ABCDEF";
+          var col = "#";
+          for (var i = 0; i < 6; i++) {
+            col += letters[Math.floor(Math.random() * 16)];
+          }
+        }
+
+        var _datasets = {
+          label: graph,
+          backgroundColor: col, 
+          fill: false,
+          borderColor: col,
+          data: []
+        };
+
+        andamentoNazionale.forEach(day => {
+          //qui prendi tutti i dati in un giorno. Inserisci nel dataset quello selezionato
+          _datasets.data.push(day[graph]);
+        });
+
+        this.chartdata.datasets.push(_datasets);
+
+        counter = counter + 1;
       });
 
       const a = andamentoNazionale[andamentoNazionale.length - 1].data;
@@ -92,29 +164,6 @@ export default {
         data[2] + "-" + data[1] + "-" + data[0] + " " + a.split(" ")[1];
 
       this.loaded = true;
-
-      //  });//this.$store.getters.andamentoNazionale();
-
-      /* 
-      this.loaded = false;
-      this.chartdata.labels = [];
-      this.chartdata.datasets[0].data = [];
-          this.axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale')
-    .then(data =>{
-      data.data.forEach(day => {
-        this.chartdata.labels.push(day.data.split(' ')[0]);
-        this.chartdata.datasets[0].data.push(day[what]);
-      });
-      this.loaded = true;
-      //here render
-    });
-    },
-    selectChanged(){
-      if(this.selectedOption=='')
-        return;
-      this.getDatasFromApi(this.selectedOption);
-    }
-    */
     },
     selectChanged() {
       this.getDatasFromApi(this.selectedOption);
@@ -129,7 +178,7 @@ export default {
     }
   },
   created() {
-    this.getDatasFromApi("totale_casi");
+    this.getDatasFromApi(["totale_casi"]);
   }
 };
 </script>
