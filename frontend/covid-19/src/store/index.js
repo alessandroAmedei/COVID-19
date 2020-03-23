@@ -23,7 +23,20 @@ export default new Vuex.Store({
         return new Promise((resolve,reject)=>{
           axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale')
           .then(data =>{
-            commit('setAndamentoNazionale', data.data);
+            var newData = data.data;
+            //CALCULATE NEW PARAMETER
+            //nuovi_casi = totale_casi[today] - totale_casi[yesterday];
+            //incremento_deceduti
+            newData[0].nuovi_casi = newData[0].totale_casi; 
+            newData[0].incremento_deceduti = newData[0].deceduti; 
+            for(var i=1;i<newData.length;i++){
+              newData[i].nuovi_casi = newData[i].totale_casi - newData[i-1].totale_casi
+              newData[i].incremento_deceduti = newData[i].deceduti - newData[i-1].deceduti
+            }
+
+
+
+            commit('setAndamentoNazionale', newData);
             resolve();
         })
         .catch(err=>{

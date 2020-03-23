@@ -53,8 +53,10 @@ export default {
     optiona: [
       { name: "totale_casi", color: "#0000ff" },
       { name: "deceduti", color: "#000000" },
+      { name: "incremento_deceduti", color: "#707070" },
       { name: "dimessi_guariti", color: "#ff0000" },
       { name: "nuovi_attualmente_positivi", color: "" },
+      { name: "nuovi_casi", color: ""},
       { name: "ricoverati_con_sintomi", color: "" },
       { name: "terapia_intensiva", color: "" },
       { name: "totale_ospedalizzati", color: "" },
@@ -150,6 +152,7 @@ export default {
 
         andamentoNazionale.forEach(day => {
           //qui prendi tutti i dati in un giorno. Inserisci nel dataset quello selezionato
+          window.console.log(day[graph]);
           _datasets.data.push(day[graph]);
         });
 
