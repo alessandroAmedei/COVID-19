@@ -60,7 +60,7 @@ export default {
       { name: "nuovi_casi", color: "#ff7f50"},
       { name: "nuovi_attualmente_positivi", color: "#BB5055" },
       { name: "ricoverati_con_sintomi", color: "" },
-      { name: "terapia_intensiva", color: "" },
+      { name: "terapia_intensiva", color: "#7f00ff" },
       { name: "totale_ospedalizzati", color: "" },
       { name: "isolamento_domiciliare", color: "" },
       { name: "totale_attualmente_positivi", color: "#ff0000" },
