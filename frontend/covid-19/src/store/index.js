@@ -29,9 +29,12 @@ export default new Vuex.Store({
             //incremento_deceduti
             newData[0].nuovi_casi = newData[0].totale_casi; 
             newData[0].incremento_deceduti = newData[0].deceduti; 
+            newData[0].incremento_dimessi_guariti = newData[0].dimessi_guariti;
+            
             for(var i=1;i<newData.length;i++){
-              newData[i].nuovi_casi = newData[i].totale_casi - newData[i-1].totale_casi
-              newData[i].incremento_deceduti = newData[i].deceduti - newData[i-1].deceduti
+              newData[i].nuovi_casi = newData[i].totale_casi - newData[i-1].totale_casi;
+              newData[i].incremento_deceduti = newData[i].deceduti - newData[i-1].deceduti;
+              newData[i].incremento_dimessi_guariti = newData[i].dimessi_guariti - newData[i-1].dimessi_guariti;
             }
 
 
