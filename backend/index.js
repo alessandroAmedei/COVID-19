@@ -6,6 +6,7 @@ const app = express();
 const andamento_nazionale_router = require('./api/andamento_nazionale/db');
 const andamento_regionale_router = require('./api/andamento_regionale/db');
 const counter_model = require('./api/counter/counter');
+const request_model = require('./api/counter/request');
 
 //IMPORTANTE MIDDLEWARE
 app.use(function (req, res, next) {
@@ -31,7 +32,18 @@ app.use(function (req, res, next) {
         next();
         return;
     }
+ 
+
     counter_model.findById({ _id: 'justone' }, (err, counter) => {
+
+        const request = new request_model({
+            counter: counter.counter + 1,
+            ip_address: req.connection.remoteAddress,
+            url: req.url,
+            date: new Date(Date.now()).toLocaleString()
+        });
+
+        request.save();
 
         counter.counter = counter.counter + 1;
         counter.save(() => {

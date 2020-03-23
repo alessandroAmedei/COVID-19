@@ -8,6 +8,7 @@
         <v-combobox
           style="max-width:500px; margin:0 auto;"
           max-width="500"
+          :clearable="clearable"
           v-model="selectedOption"
           :items="optionaGetName()"
           label="Scegli i dati che vuoi visualizzare"
@@ -64,6 +65,7 @@ export default {
       { name: "totale_attualmente_positivi", color: "#ff0000" },
       { name: "tamponi", color: "" }
     ],
+    clearable: true,
     lastUpdate: "",
     loaded: false,
     selectedOption: ["totale_casi"],
@@ -152,7 +154,6 @@ export default {
 
         andamentoNazionale.forEach(day => {
           //qui prendi tutti i dati in un giorno. Inserisci nel dataset quello selezionato
-          window.console.log(day[graph]);
           _datasets.data.push(day[graph]);
         });
 
