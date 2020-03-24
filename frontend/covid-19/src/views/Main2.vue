@@ -5,6 +5,30 @@
       <br />
       <br />
       <div style="text-align:center">
+        <v-combobox
+          style="max-width:500px; margin:0 auto;"
+          max-width="500"
+          :clearable="clearable"
+          v-model="selectedOption_regioni"
+          :items="optiona_regioni"
+          label="Scegli le regioni"
+          @change="selectChanged()"
+          multiple
+          chips
+        ></v-combobox>
+        <v-combobox
+          style="max-width:500px; margin:0 auto;"
+          max-width="500"
+          :clearable="clearable"
+          v-model="selectedOption"
+          :items="optionaGetName()"
+          label="Scegli i dati che vuoi visualizzare"
+          @change="selectChanged()"
+          multiple
+          chips
+        ></v-combobox>
+
+        <!--
           <v-select
           label="Scegli la regione"
           style="max-width:500px; margin:0 auto;"
@@ -21,6 +45,8 @@
           @change="selectChanged_regioni()"
           menu-props="auto"
         ></v-select>
+
+        -->
       </div>
       <br />
       <Chart :style="myStyles" v-if="loaded" :chartdata="chartdata" :options="options" />
@@ -30,7 +56,8 @@
       <div absolute class="font-weight-medium">
         <v-col style="font-size:13px;" class="text-center" cols="12">
           <strong>Ultimo aggiornamento</strong>
-          — {{lastUpdate}} <br>
+          — {{lastUpdate}}
+          <br />
           <strong>Fonte dati</strong> — Protezione civile
         </v-col>
       </div>
@@ -45,53 +72,51 @@ export default {
   },
   data: () => ({
     optiona: [
-      "totale_casi",
-      "deceduti",
-      "dimessi_guariti",
-      "nuovi_attualmente_positivi",
-      "ricoverati_con_sintomi",
-      "terapia_intensiva",
-      "totale_ospedalizzati",
-      "isolamento_domiciliare",
-      "totale_attualmente_positivi",
-      "tamponi"
+      { name: "totale_casi", color: "#0000ff" },
+      { name: "deceduti", color: "#000000" },
+      //{ name: "incremento_deceduti", color: "#707070" },
+      { name: "dimessi_guariti", color: "#00ff00" },
+      //{ name: "incremento_dimessi_guariti", color: "#50BB50" },
+      //{ name: "nuovi_casi", color: "#ff7f50" },
+      { name: "nuovi_attualmente_positivi", color: "#BB5055" },
+      { name: "ricoverati_con_sintomi", color: "" },
+      { name: "terapia_intensiva", color: "#7f00ff" },
+      { name: "totale_ospedalizzati", color: "" },
+      { name: "isolamento_domiciliare", color: "" },
+      { name: "totale_attualmente_positivi", color: "#ff0000" },
+      { name: "tamponi", color: "" }
     ],
+    clearable: true,
     optiona_regioni: [
-        'Valle d\'Aosta',
-        'Piemonte',
-        'Liguria',
-        'Lombardia',
-        'P.A. Trento',
-        'P.A. Bolzano',
-        'Veneto',
-        'Friuli Venezia Giulia',
-        'Emilia Romagna',
-        'Toscana',
-        'Umbria',
-        'Marche',
-        'Lazio',
-        'Abruzzo',
-        'Molise',
-        'Campania',
-        'Puglia',
-        'Basilicata',
-        'Calabria',
-        'Sicilia',
-        'Sardegna'
+      "Valle d'Aosta",
+      "Piemonte",
+      "Liguria",
+      "Lombardia",
+      "P.A. Trento",
+      "P.A. Bolzano",
+      "Veneto",
+      "Friuli Venezia Giulia",
+      "Emilia Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Lazio",
+      "Abruzzo",
+      "Molise",
+      "Campania",
+      "Puglia",
+      "Basilicata",
+      "Calabria",
+      "Sicilia",
+      "Sardegna"
     ],
     lastUpdate: "",
     loaded: false,
-    selectedOption: "totale_casi",
-    selectedOption_regioni: "Lombardia",
+    selectedOption: ["totale_casi"],
+    selectedOption_regioni: ["Lombardia"],
     chartdata: {
       labels: [],
-      datasets: [
-        {
-          label: "Casi Totali di Corona Virus",
-          backgroundColor: "#10ff50",
-          data: []
-        }
-      ]
+      datasets: []
     },
     options: {
       responsive: true,
@@ -99,27 +124,71 @@ export default {
     }
   }),
   methods: {
+    optionaGetName() {
+      var arr = [];
+      this.optiona.forEach(obj => {
+        arr.push(obj.name);
+      });
+      return arr;
+    },
     async getDatasFromApi(what) {
-      window.console.log(what);
       this.loaded = false;
 
-      // await this.$store.dispatch("getAndamentoNazionale").then(()=>{
-
-      //   const andamentoNazionale = this.$store.state.andamento_nazionale;
+      //reset
+      this.chartdata.labels = [];
+      this.chartdata.datasets = [];
 
       const andamentoRegionale = await this.$store.getters.andamentoRegionale; //SERVE AWAIT
 
-        window.console.log(andamentoRegionale);
-      this.chartdata.labels = [];
-      this.chartdata.datasets[0].data = [];
-      this.chartdata.datasets[0].label = what + ' , ' + this.selectedOption_regioni;
+      //create labels
+      andamentoRegionale.forEach(day => {
+        if (day.denominazione_regione === "Lombardia")
+          this.chartdata.labels.push(day.data.split(" ")[0]); //IMPOSTA LABELS (ASSE X)
+      });
 
-      andamentoRegionale.forEach(day => { //Qui cicla tutto ogni volta..
-        const region = day.denominazione_regione;
-        if(region === this.selectedOption_regioni){
-        this.chartdata.labels.push(day.data.split(" ")[0]);
-        this.chartdata.datasets[0].data.push(day[what]);
-        }
+      const selected_regions = this.selectedOption_regioni;
+      const selected_datas = this.selectedOption;
+      //new code
+      selected_regions.forEach(region => {
+        //region ex: Lombardia
+
+        selected_datas.forEach(data => {
+          //datatype ex: totale_casi
+
+          //prendi il colore!
+          var col = "";
+         /* this.optiona.forEach(obj => {
+            //cicli tutte le opzioni e prendi il colore
+            if (obj.name === data) col = obj.color;
+          });
+          */
+
+          if (col === "") {
+            //se colore non impostato, crealo random
+            const letters = "0123456789ABCDEF";
+            var col = "#";
+            for (var i = 0; i < 6; i++) {
+              col += letters[Math.floor(Math.random() * 16)];
+            }
+          }
+
+          var dataset = {
+            label: region + ", " + data,
+            backgroundColor: col,
+            data: [],
+            fill: false,
+            borderColor: col
+          };
+
+          andamentoRegionale.forEach(dr => {
+            if (dr.denominazione_regione === region) {
+              //Qui abbiamo dei dati della Lombardia di un giorno
+              dataset.data.push(dr[data]);
+            }
+          });
+
+          this.chartdata.datasets.push(dataset);
+        });
       });
 
       const a = andamentoRegionale[andamentoRegionale.length - 1].data;
@@ -128,29 +197,6 @@ export default {
         data[2] + "-" + data[1] + "-" + data[0] + " " + a.split(" ")[1];
 
       this.loaded = true;
-
-      //  });//this.$store.getters.andamentoNazionale();
-
-      /* 
-      this.loaded = false;
-      this.chartdata.labels = [];
-      this.chartdata.datasets[0].data = [];
-          this.axios.get('https://covid-19-virus.herokuapp.com/api/andamento_nazionale')
-    .then(data =>{
-      data.data.forEach(day => {
-        this.chartdata.labels.push(day.data.split(' ')[0]);
-        this.chartdata.datasets[0].data.push(day[what]);
-      });
-      this.loaded = true;
-      //here render
-    });
-    },
-    selectChanged(){
-      if(this.selectedOption=='')
-        return;
-      this.getDatasFromApi(this.selectedOption);
-    }
-    */
     },
     selectChanged() {
       this.getDatasFromApi(this.selectedOption);

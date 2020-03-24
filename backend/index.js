@@ -5,6 +5,7 @@ const app = express();
 
 const andamento_nazionale_router = require('./api/andamento_nazionale/db');
 const andamento_regionale_router = require('./api/andamento_regionale/db');
+const andamento_provinciale_router = require('./api/andamento_provinciale/db');
 const counter_model = require('./api/counter/counter');
 const request_model = require('./api/counter/request');
 
@@ -32,7 +33,6 @@ app.use(function (req, res, next) {
         next();
         return;
     }
- 
 
     counter_model.findById({ _id: 'justone' }, (err, counter) => {
 
@@ -63,6 +63,8 @@ app.get('/api', (req, res) => {
 app.use('/api', andamento_nazionale_router);
 
 app.use('/api', andamento_regionale_router);
+
+app.use('/api', andamento_provinciale_router);
 
 const port = process.env.PORT || 5000;
 
