@@ -1,8 +1,11 @@
 <template>
-  <v-content style="height: 100%;">
-    <v-button @click="regioni()">Regioni</v-button>
-    <v-button @click="province()">Province</v-button>
-    <div style="height: 100%; width: 100%; padding:10px;">
+  <v-content style="height: 100%; text-align:center; overflow-y:hidden;">
+  <div id="button-wrapper">
+         <v-btn style="margin-bottom:10px;" rounded :disabled="this.selected==='regioni'?true:false" @click="regioni()">Regioni</v-btn>
+    <v-btn style="margin-bottom:10px;" rounded :disabled="this.selected==='province'?true:false" @click="province()">Province</v-btn>
+      </div>
+ <!--   <div style="height:100%; width: 100%; padding:10px; text-align:center;"> -->
+    
       <l-map
         v-if="showMap"
         :zoom="zoom"
@@ -37,7 +40,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-    </div>
+   <!-- </div> -->
   </v-content>
 </template>
 
@@ -64,6 +67,7 @@ export default {
   },
   data() {
     return {
+      selected: "regioni",
       region_name: "",
       region_data: "",
       dialog: false,
@@ -80,24 +84,33 @@ export default {
     };
   },
   methods: {
-    regioni(){
+    regioni() {
+      window.console.log(L.geoJSON);
+      this.selected = "regioni";
       this.installRegionale();
     },
-    province(){
+    province() {
+      this.selected = "province";
       this.installProvinciale();
     },
     clikked(el) {
-      this.region_name = el.name;
-      this.region_data =
-        "Totale casi: " +
-        el.casi +
-        " || " +
-        "Incremento positivi: " +
-        el.element.nuovi_attualmente_positivi;
-      this.dialog = true;
+      if (this.selected === "regioni") {
+        this.region_name = el.name;
+        this.region_data =
+          "Totale casi: " +
+          el.casi +
+          " || " +
+          "Incremento positivi: " +
+          el.element.nuovi_attualmente_positivi;
+        this.dialog = true;
+      } else {
+        this.region_name = el.name;
+        this.region_data = "Totale casi: " + el.casi;
+        this.dialog = true;
+      }
     },
     async installRegionale() {
-      this.markers=[];
+      this.markers = [];
       const andamentoRegionale = await this.$store.getters.andamentoRegionale;
 
       const size = andamentoRegionale.length;
@@ -120,23 +133,26 @@ export default {
       }
     },
     async installProvinciale() {
-      this.markers=[];
+      this.markers = [];
       const andamentoProvinciale = await this.$store.getters
         .andamentoProvinciale;
 
       const size = andamentoProvinciale.length;
-      const numero_province = 107;
+      const numero_province = 130;
       for (var i = size - numero_province - 1; i < size; i++) {
         const element = andamentoProvinciale[i];
-        window.console.log(element.denominazione_provincia,element.denominazione_regione);
-        
+        window.console.log(
+          element.denominazione_provincia,
+          element.denominazione_regione
+        );
 
         const base = element.totale_casi; //TODO improve this
-       // if (base < 500) base = 2000;
-       // else if (base < 5000) base = base * 4;
-       if(base<500)
-       base = base*5;
-       base = base*3;
+        // if (base < 500) base = 2000;
+        // else if (base < 5000) base = base * 4;
+        base = base * 1.4;
+        if (base < 100) base = base * 15;
+        else if (base < 500) base = base * 5;
+        else if (base > 2000) base = base * 1.3;
 
         var obj = {
           latLng: latLng(element.lat, element.long),
@@ -151,7 +167,18 @@ export default {
     }
   },
   async created() {
-    this.installProvinciale();
+    this.installRegionale();
   }
-};
+}
 </script>
+<style>
+#button-wrapper {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    z-index: 1;
+}
+body{
+  overflow:hidden;
+}
+</style>
