@@ -29,14 +29,16 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false
 
-store.dispatch('getAndamentoRegionale').then(()=>{
-  store.dispatch('getAndamentoNazionale').then(()=>{
-    new Vue({
-      router,
-      store,
-      vuetify,
-      render: h => h(App)
-    }).$mount('#app')
+store.dispatch('getAndamentoRegionale').then(() => {
+  store.dispatch('getAndamentoNazionale').then(() => {
+    store.dispatch('getAndamentoProvinciale').then(() => {
+      new Vue({
+        router,
+        store,
+        vuetify,
+        render: h => h(App)
+      }).$mount('#app')
+    });
   });
 });
 

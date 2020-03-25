@@ -1,5 +1,7 @@
 <template>
   <v-content style="height: 100%;">
+    <v-button @click="regioni()">Regioni</v-button>
+    <v-button @click="province()">Province</v-button>
     <div style="height: 100%; width: 100%; padding:10px;">
       <l-map
         v-if="showMap"
@@ -78,6 +80,12 @@ export default {
     };
   },
   methods: {
+    regioni(){
+      this.installRegionale();
+    },
+    province(){
+      this.installProvinciale();
+    },
     clikked(el) {
       this.region_name = el.name;
       this.region_data =
@@ -87,28 +95,63 @@ export default {
         "Incremento positivi: " +
         el.element.nuovi_attualmente_positivi;
       this.dialog = true;
+    },
+    async installRegionale() {
+      this.markers=[];
+      const andamentoRegionale = await this.$store.getters.andamentoRegionale;
+
+      const size = andamentoRegionale.length;
+      for (var i = size - 20 - 1; i < size; i++) {
+        const element = andamentoRegionale[i];
+
+        const base = element.totale_casi; //TODO improve this
+        if (base < 1000) base = 2000;
+        else if (base < 5000) base = base * 2;
+
+        var obj = {
+          latLng: latLng(element.lat, element.long),
+          radius: base * 4,
+          name: element.denominazione_regione,
+          casi: element.totale_casi,
+          element: element
+        };
+
+        this.markers.push(obj);
+      }
+    },
+    async installProvinciale() {
+      this.markers=[];
+      const andamentoProvinciale = await this.$store.getters
+        .andamentoProvinciale;
+
+      const size = andamentoProvinciale.length;
+      const numero_province = 107;
+      for (var i = size - numero_province - 1; i < size; i++) {
+        const element = andamentoProvinciale[i];
+        window.console.log(element.denominazione_provincia,element.denominazione_regione);
+        
+
+        const base = element.totale_casi; //TODO improve this
+       // if (base < 500) base = 2000;
+       // else if (base < 5000) base = base * 4;
+       if(base<500)
+       base = base*5;
+       base = base*3;
+
+        var obj = {
+          latLng: latLng(element.lat, element.long),
+          radius: base * 4,
+          name: element.denominazione_provincia,
+          casi: element.totale_casi,
+          element: element
+        };
+
+        this.markers.push(obj);
+      }
     }
   },
   async created() {
-    const andamentoRegionale = await this.$store.getters.andamentoRegionale;
-
-    const size = andamentoRegionale.length;
-    for (var i = size - 20 - 1; i < size; i++) {
-      const element = andamentoRegionale[i];
-
-      const base = element.totale_casi; //TODO improve this
-      if (base < 1000) base = 2000;
-      else if (base < 5000) base = base * 2;
-
-      var obj = {
-        latLng: latLng(element.lat, element.long),
-        radius: base * 4,
-        name: element.denominazione_regione,
-        casi: element.totale_casi,
-        element: element
-      };
-      this.markers.push(obj);
-    }
+    this.installProvinciale();
   }
 };
 </script>
