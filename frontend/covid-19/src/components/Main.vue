@@ -122,7 +122,7 @@ export default {
       this.chartdata.datasets = [];
 
       andamentoNazionale.forEach(day => {
-        this.chartdata.labels.push(day.data.split(" ")[0]); //IMPOSTA LABELS (ASSE X)
+        this.chartdata.labels.push(day.data.split("T")[0]); //IMPOSTA LABELS (ASSE X)
       });
 
       var counter = 0;
@@ -164,9 +164,9 @@ export default {
       });
 
       const a = andamentoNazionale[andamentoNazionale.length - 1].data;
-      const data = a.split(" ")[0].split("-");
+      const data = a.split("T")[0].split("-");
       this.lastUpdate =
-        data[2] + "-" + data[1] + "-" + data[0] + " " + a.split(" ")[1];
+        data[2] + "-" + data[1] + "-" + data[0] + " " + a.split("T")[1];
 
       this.loaded = true;
     },

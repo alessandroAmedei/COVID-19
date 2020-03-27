@@ -143,7 +143,7 @@ export default {
       //create labels
       andamentoRegionale.forEach(day => {
         if (day.denominazione_regione === "Lombardia")
-          this.chartdata.labels.push(day.data.split(" ")[0]); //IMPOSTA LABELS (ASSE X)
+          this.chartdata.labels.push(day.data.split("T")[0]); //IMPOSTA LABELS (ASSE X)
       });
 
       const selected_regions = this.selectedOption_regioni;
@@ -192,9 +192,9 @@ export default {
       });
 
       const a = andamentoRegionale[andamentoRegionale.length - 1].data;
-      const data = a.split(" ")[0].split("-");
+      const data = a.split("T")[0].split("-");
       this.lastUpdate =
-        data[2] + "-" + data[1] + "-" + data[0] + " " + a.split(" ")[1];
+        data[2] + "-" + data[1] + "-" + data[0] + " " + a.split("T")[1];
 
       this.loaded = true;
     },
