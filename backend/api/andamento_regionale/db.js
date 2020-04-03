@@ -26,7 +26,7 @@ const andamento_regionale_schema = new mongoose.Schema({
 
 const andamento_regionale_model = mongoose.model('andamento_regionale', andamento_regionale_schema);
 
-router.get('/andamento_regionale'), (req, res) => {
+router.get('/andamento_regionale', (req, res) => {
     andamento_regionale_model.find({}).sort('data').exec((err, data) => {
         if (err)
             res.status(500).json(err);
