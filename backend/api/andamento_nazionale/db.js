@@ -28,7 +28,7 @@ const andamento_nazionale_schema = new mongoose.Schema({
 const andamento_nazionale_model = mongoose.model('andamento_nazionale', andamento_nazionale_schema);
 
 router.get('/andamento_nazionale', (req, res) => {
-    andamento_nazionale_model.find({}, (err, data) => {
+    andamento_nazionale_model.find({}).sort('data').exec((err, data) => {
         if (err)
             res.status(500).json(err);
         res.json(data);
