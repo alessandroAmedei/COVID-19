@@ -30,6 +30,7 @@ export default {
       items: [
         { icon: "mdi-home", text: "Andamento Nazionale", route: "/" },
         { icon: "mdi-home", text: "Andamento Regionale", route: "/main2" },
+        { icon: "mdi-home", text: "Questionario", route: "/questionario" },
         { icon: "person", text: "Mappa", route: "/map" },
         {
           icon: "mdi-home",
