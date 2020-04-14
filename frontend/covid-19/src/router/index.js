@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../components/Main.vue'
 import Main2 from '../views/Main2.vue'
+import Questionario from '../views/Questionario.vue'
 import Norme from '../views/Norme.vue'
 import Governo from '../views/Governo.vue'
 import Numeri from '../views/Numeri.vue'
@@ -21,6 +22,11 @@ const routes = [
     path: '/main2',
     name: 'Main2',
     component: Main2
+  },
+  {
+    path: '/questionario',
+    name: 'Questionario',
+    component: Questionario
   },
   {
     path: '/norme',
