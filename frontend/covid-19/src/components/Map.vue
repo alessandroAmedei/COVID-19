@@ -85,7 +85,6 @@ export default {
   },
   methods: {
     regioni() {
-      window.console.log(L.geoJSON);
       this.selected = "regioni";
       this.installRegionale();
     },
@@ -101,7 +100,7 @@ export default {
           el.casi +
           " || " +
           "Incremento positivi: " +
-          el.element.nuovi_attualmente_positivi;
+          el.element.variazione_totale_positivi;
         this.dialog = true;
       } else {
         this.region_name = el.name;
@@ -115,8 +114,9 @@ export default {
 
       const size = andamentoRegionale.length;
       for (var i = size - 20 - 1; i < size; i++) {
+        
         const element = andamentoRegionale[i];
-
+window.console.log(element);
         const base = element.totale_casi; //TODO improve this
         if (base < 1000) base = 2000;
         else if (base < 5000) base = base * 2;
@@ -141,10 +141,6 @@ export default {
       const numero_province = 130;
       for (var i = size - numero_province - 1; i < size; i++) {
         const element = andamentoProvinciale[i];
-        window.console.log(
-          element.denominazione_provincia,
-          element.denominazione_regione
-        );
 
         const base = element.totale_casi; //TODO improve this
         // if (base < 500) base = 2000;

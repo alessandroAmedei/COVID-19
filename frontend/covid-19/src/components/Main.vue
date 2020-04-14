@@ -58,13 +58,15 @@ export default {
       { name: "dimessi_guariti", color: "#00ff00" },
       { name: "incremento_dimessi_guariti", color: "#50BB50" },
       { name: "nuovi_casi", color: "#ff7f50"},
-      { name: "nuovi_attualmente_positivi", color: "#BB5055" },
+      { name: "variazione_totale_positivi", color: "#BB5055" },
       { name: "ricoverati_con_sintomi", color: "" },
       { name: "terapia_intensiva", color: "#7f00ff" },
       { name: "totale_ospedalizzati", color: "" },
       { name: "isolamento_domiciliare", color: "" },
-      { name: "totale_attualmente_positivi", color: "#ff0000" },
-      { name: "tamponi", color: "" }
+      { name: "totale_positivi", color: "#ff0000" },
+      { name: "tamponi", color: "" },
+      { name: "nuovi_tamponi", color: "" },
+      { name: "rapporto_totale_malati_su_tamponi", color: "" }
     ],
     clearable: true,
     lastUpdate: "",
