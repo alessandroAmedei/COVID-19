@@ -79,6 +79,7 @@ export default {
       //{ name: "incremento_dimessi_guariti", color: "#50BB50" },
       //{ name: "nuovi_casi", color: "#ff7f50" },
       { name: "variazione_totale_positivi", color: "#BB5055" },
+            { name: "nuovi_positivi", color: "" },
       { name: "ricoverati_con_sintomi", color: "" },
       { name: "terapia_intensiva", color: "#7f00ff" },
       { name: "totale_ospedalizzati", color: "" },
