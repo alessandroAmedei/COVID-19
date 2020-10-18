@@ -30,8 +30,10 @@
       </div>
       <br />
       <Chart :style="myStyles" v-if="loaded" :chartdata="chartdata" :options="options" />
-
+    
+      <Table/>
       <!-- footer -->
+      <br />
       <br />
       <div absolute class="font-weight-medium">
         <v-col style="font-size:13px;" class="text-center" cols="12">
@@ -46,9 +48,11 @@
 </template>
 <script>
 import Chart from "./Chart.vue";
+import Table from "./Table.vue";
 export default {
   components: {
-    Chart
+    Chart,
+    Table
   },
   data: () => ({
     optiona: [

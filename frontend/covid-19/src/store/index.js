@@ -113,6 +113,9 @@ export default new Vuex.Store({
     andamentoNazionale(state) {
       return state.andamento_nazionale;
     },
+    an_size(state) {
+      return state.andamento_nazionale.length;
+    },
     andamentoRegionale(state) {
       return state.andamento_regionale;
     },

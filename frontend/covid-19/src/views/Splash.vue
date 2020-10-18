@@ -33,8 +33,8 @@
 #image{
       background-image: url('../assets/covid.png');
       background-size: contain;
-      height: 300px;
-      width: 300px;
+      height: 250px;
+      width: 250px;
       animation: rotate;
       animation-duration: 2.5s;
       animation-iteration-count: infinite;
