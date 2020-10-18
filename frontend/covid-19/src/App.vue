@@ -1,7 +1,9 @@
 <template>
 <v-app>
-  <Navbar/>
-  <router-view/>
+  <Navbar v-if="!loading"></Navbar>
+  <router-view v-if="!loading"> </router-view>
+  <Splash v-if="loading"></Splash>
+
   <br>
   <br>
   <!--<footer style="text-align:center;">
@@ -14,7 +16,13 @@
 </template>
 <script>
 import Navbar from '@/views/Navbar.vue';
+import Splash from '@/views/Splash.vue';
 export default{
-  components: { Navbar }
+  components: { Navbar, Splash },
+  computed:{
+    loading(){
+      return this.$store.getters.loading;
+    }
+  }
 }
 </script>

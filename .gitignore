@@ -1,0 +1,4 @@
+node_modules
+backend/node_modules
+frontend/covid-19/node_modules
+backend/.env
